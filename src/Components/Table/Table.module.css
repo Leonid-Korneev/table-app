@@ -1,0 +1,20 @@
+.selected {
+    color: white;
+    background-color: #2a54ec;
+    border-radius: 3px;
+}
+.item {
+    font-size: 130%;
+    margin-right: 5px;
+    padding: 5px;
+}
+.item:hover {
+
+    cursor: pointer;
+}
+.tableRow:hover {
+    cursor: pointer;
+    background-color: #e3e3e3;
+    transition: all .3s ease;
+
+}

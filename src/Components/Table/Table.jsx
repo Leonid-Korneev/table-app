@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-
+import s from "./Table.module.css"
 
 const Table = ( {data, onRowClick,totalPages,usersPerPage })=> {
 
@@ -7,7 +7,6 @@ const Table = ( {data, onRowClick,totalPages,usersPerPage })=> {
     const [isAscSorting, setSorting] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
 
-    debugger
 
     function onPageChangeClick(page) {
         setCurrentPage(page)
@@ -16,17 +15,17 @@ const Table = ( {data, onRowClick,totalPages,usersPerPage })=> {
 
     let pagesArr = []
     for(let i=1;i<=totalPages;i++) {
-        pagesArr.push(<label onClick={onPageChangeClick.bind(null,i)} key={i}>{i}</label>)
+        pagesArr.push(<label className={ s.item + " " +  ((currentPage===i)? s.selected:null)} onClick={onPageChangeClick.bind(null,i)} key={i}>{i}</label>)
     }
 
 
 
 
-    const sort = (sortType)=> {
+    const sort = (sortProperty)=> {
         if(isAscSorting) {
-            setData([...dataClone.sort((a,b)=> {return a[`${sortType}`]> b[`${sortType}`] ? -1 : 1})])
+            setData([...dataClone.sort((a,b)=> {return a[`${sortProperty}`]> b[`${sortProperty}`] ? -1 : 1})])
         } else {
-            setData([...dataClone.sort((a,b)=> {return a[`${sortType}`]> b[`${sortType}`] ? 1 : -1})])
+            setData([...dataClone.sort((a,b)=> {return a[`${sortProperty}`]> b[`${sortProperty}`] ? 1 : -1})])
         }
 
 
@@ -51,7 +50,7 @@ const Table = ( {data, onRowClick,totalPages,usersPerPage })=> {
 
 
 
-                   <tr  key={user.id+user.phone} onClick={onRowClick.bind(null,user)}>
+                   <tr className={s.tableRow} key={user.id+user.phone} onClick={onRowClick.bind(null,user)}>
                    <th >{user.id}</th>
                    <td  >{user.firstName}</td>
                    <td>{user.lastName}</td>
