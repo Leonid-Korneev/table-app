@@ -1,5 +1,6 @@
 import React, {useState} from "react";
 import s from "./Table.module.css"
+import {AddForm} from "../AddForm/AddForm";
 
 const Table = ( {data, onRowClick,totalPages,usersPerPage })=> {
 
@@ -12,6 +13,10 @@ const Table = ( {data, onRowClick,totalPages,usersPerPage })=> {
         setCurrentPage(page)
     }
 
+
+    const addUser = (user)=> {
+        setData([{...user},...dataClone])
+    }
 
     let pagesArr = []
     for(let i=1;i<=totalPages;i++) {
@@ -36,6 +41,7 @@ const Table = ( {data, onRowClick,totalPages,usersPerPage })=> {
     return (
 
        <div>
+           <div className={s.addForm}>   <AddForm addUser={addUser}  /> </div>
            <table className="table">
                <thead>
                <tr>
