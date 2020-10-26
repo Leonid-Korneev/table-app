@@ -1,10 +1,11 @@
 import {Field, Form} from "react-final-form";
 import React, {useState} from "react";
+import {required} from "../../common/validators/validators";
 
 
 
 
-export const AddForm = ({addUser})=> {
+export const AddForm = ({addUser, dataLength})=> {
 
     let [addMode, setAddMode] = useState(false)
 
@@ -16,17 +17,17 @@ export const AddForm = ({addUser})=> {
 
 
 
-    return (!addMode) ? <button onClick={()=>{setAddMode(true)}}>Add new user</button> : <Form onSubmit={onSubmit}>
+    return (!addMode) ? <button onClick={()=>{setAddMode(true)}}>Add new user</button> : <Form  onSubmit={onSubmit}>
                 {props => (
-                    <form onSubmit={props.handleSubmit}>
+                    <form  onSubmit={props.handleSubmit}>
 
-                        <Field  name="id"  component="input"  type="number" placeholder="ID" />
-                        <Field  name="firstName"  component="input"  type="text" placeholder="First Name " />
-                        <Field  name="lastName"  component="input"  type="text" placeholder="Last Name " />
-                        <Field  name="email"  component="input"  type="email" placeholder="Email" />
-                        <Field  name="phone"  component="input"  type="text" placeholder="Phone" />
+                        <Field  name="id"  component="input" validate={required}  type="number" min={dataLength} defaultValue={dataLength} placeholder="ID" />
+                        <Field  name="firstName" validate={required} component="input"  type="text" placeholder="First Name " />
+                        <Field  name="lastName" validate={required}  component="input"  type="text" placeholder="Last Name " />
+                        <Field  name="email"   validate={required} component="input"  type="email" placeholder="Email" />
+                        <Field  name="phone" validate={required} component="input"  type="text" placeholder="Phone" />
 
-                        <button type="submit">Add</button>
+                        <button type="submit" >Add</button>
                     </form>
                 )}
             </Form>

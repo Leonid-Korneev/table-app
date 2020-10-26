@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import s from "./Table.module.css"
 import {AddForm} from "../AddForm/AddForm";
+import {Paginator} from "../Paginator/Paginator";
 
 const Table = ( {data, onRowClick,totalPages,usersPerPage })=> {
 
@@ -37,11 +38,11 @@ const Table = ( {data, onRowClick,totalPages,usersPerPage })=> {
         setSorting(!isAscSorting)
 
     }
-
+    debugger
     return (
 
        <div>
-           <div className={s.addForm}>   <AddForm addUser={addUser}  /> </div>
+           <div className={s.addForm}>   <AddForm addUser={addUser} dataLength= {  data ? dataClone.length : 0}  /> </div>
            <table className="table">
                <thead>
                <tr>
@@ -63,14 +64,15 @@ const Table = ( {data, onRowClick,totalPages,usersPerPage })=> {
                    <td>{user.email}</td>
                    <td>{user.phone}</td>
 
-               </tr>))).filter((el,i)=>{return    ((i>=(currentPage-1)*usersPerPage)&&(i<currentPage*usersPerPage) ) } )  : null          }
+               </tr>))).slice((currentPage-1)*usersPerPage, currentPage*usersPerPage)  : null          }
                </thead>
                <tbody>
 
                </tbody>
            </table>
            <div className="pagination">
-               {pagesArr}
+               <Paginator currentPage={currentPage} totalPages={totalPages} onPageChangeClick={onPageChangeClick} />
+
            </div>
        </div>
     )
