@@ -1,35 +1,39 @@
-import {Field, Form} from "react-final-form";
-import React, {useState} from "react";
-import {required} from "../../common/validators/validators";
+
+import React, { useState} from "react";
+
+import {useForm} from "react-hook-form";
+import s from "./AddForm.module.css"
 
 
-
-
-export const AddForm = ({addUser, dataLength})=> {
+export const AddForm = ({addUser, dataLength}) => {
 
     let [addMode, setAddMode] = useState(false)
+    const { register, handleSubmit, formState  } = useForm({mode:"onChange"});
 
-    const onSubmit = (data,form)=> {
-        addUser(data)
-        setTimeout(()=>{form.reset()})
+
+    const onSubmit = (data, e) => {
+
+         addUser(data)
+        e.target.reset()
         setAddMode(false)
+
     }
 
 
+    return (!addMode) ? <button type="button" className="btn btn-primary" onClick={() => {
+        setAddMode(true)
+    }}>Add new user</button> : <form onSubmit={handleSubmit(onSubmit)}>
+        <input    className={s.addForm__item}   ref={register({ required: true})} name="id" type="number" min={dataLength} defaultValue={dataLength} placeholder="ID"/>
+        <input   className={s.addForm__item}  ref={register({ required: true})} name="firstName" type="text" placeholder="First Name "/>
+        <input  className={s.addForm__item}  ref={register({ required: true})} name="lastName" type="text" placeholder="Last Name "/>
+        <input   className={s.addForm__item} ref={register({ required: true})} name="email" type="email" placeholder="Email"/>
+        <input  className={s.addForm__item}  ref={register({ required: true})} name="phone" type="text" placeholder="Phone"/>
+        <button  className="btn btn-primary" type="submit" disabled={!formState.isValid}>Add</button>
 
-    return (!addMode) ? <button onClick={()=>{setAddMode(true)}}>Add new user</button> : <Form  onSubmit={onSubmit}>
-                {props => (
-                    <form  onSubmit={props.handleSubmit}>
+    </form>
 
-                        <Field  name="id"  component="input" validate={required}  type="number" min={dataLength} defaultValue={dataLength} placeholder="ID" />
-                        <Field  name="firstName" validate={required} component="input"  type="text" placeholder="First Name " />
-                        <Field  name="lastName" validate={required}  component="input"  type="text" placeholder="Last Name " />
-                        <Field  name="email"   validate={required} component="input"  type="email" placeholder="Email" />
-                        <Field  name="phone" validate={required} component="input"  type="text" placeholder="Phone" />
 
-                        <button type="submit" >Add</button>
-                    </form>
-                )}
-            </Form>
 
 }
+
+

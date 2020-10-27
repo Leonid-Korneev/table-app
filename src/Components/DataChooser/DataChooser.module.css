@@ -1,0 +1,16 @@
+.title {
+    color: #007bff;
+}
+.container {
+    display: grid;
+    justify-content: center;
+    margin-top: 50px;
+
+}
+.buttons {
+    padding: 10px;
+    justify-self: center;
+}
+.button {
+    margin-right: 10px;
+}

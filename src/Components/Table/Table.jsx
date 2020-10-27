@@ -3,7 +3,7 @@ import s from "./Table.module.css"
 import {AddForm} from "../AddForm/AddForm";
 import {Paginator} from "../Paginator/Paginator";
 
-const Table = ( {data, onRowClick,totalPages,usersPerPage })=> {
+const Table = ({data, onRowClick, totalPages, totalUsersCount, usersPerPage = 2}) => {
 
     const [dataClone, setData] = useState(data)
     const [isAscSorting, setSorting] = useState(false)
@@ -15,17 +15,20 @@ const Table = ( {data, onRowClick,totalPages,usersPerPage })=> {
     }
 
 
-    const addUser = (user)=> {
-        setData([{...user},...dataClone])
+    const addUser = (user) => {
+        setData([{...user}, ...dataClone])
     }
 
 
-
-    const sort = (sortProperty)=> {
-        if(isAscSorting) {
-            setData([...dataClone.sort((a,b)=> {return a[`${sortProperty}`]> b[`${sortProperty}`] ? -1 : 1})])
+    const sort = (sortProperty) => {
+        if (isAscSorting) {
+            setData([...dataClone.sort((a, b) => {
+                return a[`${sortProperty}`] > b[`${sortProperty}`] ? -1 : 1
+            })])
         } else {
-            setData([...dataClone.sort((a,b)=> {return a[`${sortProperty}`]> b[`${sortProperty}`] ? 1 : -1})])
+            setData([...dataClone.sort((a, b) => {
+                return a[`${sortProperty}`] > b[`${sortProperty}`] ? 1 : -1
+            })])
         }
 
 
@@ -35,40 +38,46 @@ const Table = ( {data, onRowClick,totalPages,usersPerPage })=> {
 
     return (
 
-       <div>
-           <div className={s.addForm}>   <AddForm addUser={addUser} dataLength= {  data ? dataClone.length : 0}  /> </div>
-           <table className="table">
-               <thead>
-               <tr>
-                   <th onClick={sort.bind(null, "id")}>id { }</th>
-                   <th onClick={sort.bind(null, "firstName")}>First Name </th>
-                   <th onClick={sort.bind(null, "lastName")} >Last Name</th>
-                   <th onClick={sort.bind(null, "email")}>Email </th>
-                   <th onClick={sort.bind(null, "phone")}>Phone </th>
-               </tr>
+        <div>
+            <div className={s.addForm}>
+                <AddForm addUser={addUser} dataLength={data ? dataClone.length : 0}/>
+            </div>
 
-               {  data ?    (dataClone.map(user=>(
+            <table className="table">
+                <thead>
+                <tr>
+                    <th className={s.table_header} onClick={sort.bind(null, "id")}>ID {}</th>
+                    <th className={s.table_header} onClick={sort.bind(null, "firstName")}>First Name</th>
+                    <th className={s.table_header} onClick={sort.bind(null, "lastName")}>Last Name</th>
+                    <th className={s.table_header} onClick={sort.bind(null, "email")}>Email</th>
+                    <th className={s.table_header} onClick={sort.bind(null, "phone")}>Phone</th>
+                </tr>
+
+                {data ? (dataClone.map(user => (
 
 
+                    <tr className={s.tableRow} key={user.id + user.phone} onClick={onRowClick.bind(null, user)}>
+                        <th>{user.id}</th>
+                        <td>{user.firstName}</td>
+                        <td>{user.lastName}</td>
+                        <td>{user.email}</td>
+                        <td>{user.phone}</td>
 
-                   <tr className={s.tableRow} key={user.id+user.phone} onClick={onRowClick.bind(null,user)}>
-                   <th >{user.id}</th>
-                   <td  >{user.firstName}</td>
-                   <td>{user.lastName}</td>
-                   <td>{user.email}</td>
-                   <td>{user.phone}</td>
+                    </tr>))).slice((currentPage - 1) * usersPerPage, currentPage * usersPerPage) : null}
+                </thead>
+                <tbody>
 
-               </tr>))).slice((currentPage-1)*usersPerPage, currentPage*usersPerPage)  : null          }
-               </thead>
-               <tbody>
+                </tbody>
+            </table>
 
-               </tbody>
-           </table>
-           <div className={s.pagination}>
-               <Paginator currentPage={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage} onPageChangeClick={onPageChangeClick} />
 
-           </div>
-       </div>
+            <div className={s.pagination}>
+                <Paginator usersPerPage={usersPerPage} currentPage={currentPage} totalPages={totalPages}
+                           totalUsersCount={totalUsersCount}
+                           setCurrentPage={setCurrentPage} onPageChangeClick={onPageChangeClick}/>
+
+            </div>
+        </div>
     )
 }
 
