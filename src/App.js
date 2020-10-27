@@ -12,7 +12,7 @@ function App() {
     const [isLoading, setIsLoading] = useState(false)
     const [selectedUser, setSelectedUser] = useState(null)
     const [totalUsersCount, setTotalUsersCount] = useState(0)
-    const usersPerPage = 10
+    const usersPerPage = 5
     let totalPages = Math.ceil(totalUsersCount/usersPerPage)
 
     useEffect(() => {

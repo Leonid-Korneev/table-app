@@ -24,3 +24,13 @@
     justify-content: space-around;
     margin: 15px;
 }
+.pagination {
+    display: flex;
+    justify-content: space-around;
+}
+
+.button {
+    padding: 4px;
+    border-radius: 5px;
+    margin-right: 10px;
+}

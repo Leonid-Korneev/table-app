@@ -19,12 +19,6 @@ const Table = ( {data, onRowClick,totalPages,usersPerPage })=> {
         setData([{...user},...dataClone])
     }
 
-    let pagesArr = []
-    for(let i=1;i<=totalPages;i++) {
-        pagesArr.push(<label className={ s.item + " " +  ((currentPage===i)? s.selected:null)} onClick={onPageChangeClick.bind(null,i)} key={i}>{i}</label>)
-    }
-
-
 
 
     const sort = (sortProperty)=> {
@@ -38,7 +32,7 @@ const Table = ( {data, onRowClick,totalPages,usersPerPage })=> {
         setSorting(!isAscSorting)
 
     }
-    debugger
+
     return (
 
        <div>
@@ -70,8 +64,8 @@ const Table = ( {data, onRowClick,totalPages,usersPerPage })=> {
 
                </tbody>
            </table>
-           <div className="pagination">
-               <Paginator currentPage={currentPage} totalPages={totalPages} onPageChangeClick={onPageChangeClick} />
+           <div className={s.pagination}>
+               <Paginator currentPage={currentPage} totalPages={totalPages} setCurrentPage={setCurrentPage} onPageChangeClick={onPageChangeClick} />
 
            </div>
        </div>
