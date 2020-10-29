@@ -31,7 +31,7 @@ export const Paginator = ({currentPage, onPageChangeClick, portionSize = 10, set
 
     return (
         <>
-            {currentPortion > 1 ? <button type="button" className={s.item + s.button + " " + "btn btn-primary"}
+            {currentPortion > 1 ? <button type="button" className={s.item + s.button + "" + "btn btn-primary"}
                                           onClick={onPreviousBtnClick}> Prev </button> : null}
             <div>  {pagesArr.slice(firstItemInPortion, lastItemInPortion)}</div>
             {currentPortion === lastPortion ? null : <button className={s.item + s.button + " " + "btn btn-primary"}

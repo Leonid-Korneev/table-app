@@ -1,13 +1,19 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import s from "./Table.module.css"
 import {AddForm} from "../AddForm/AddForm";
 import {Paginator} from "../Paginator/Paginator";
+import {SearchForm} from "../SearchForm/SearchForm";
 
-const Table = ({data, onRowClick, totalPages, totalUsersCount, usersPerPage = 2}) => {
+const Table = ({data, onRowClick, totalPages, totalUsersCount, setTotalUsersCount, usersPerPage = 15}) => {
 
     const [dataClone, setData] = useState(data)
     const [isAscSorting, setSorting] = useState(false)
+    const [filteredData, setFilteredData] = useState(dataClone)
     const [currentPage, setCurrentPage] = useState(1)
+
+    useEffect(() => {
+        setTotalUsersCount(filteredData.length)
+    }, [filteredData])
 
 
     function onPageChangeClick(page) {
@@ -20,19 +26,35 @@ const Table = ({data, onRowClick, totalPages, totalUsersCount, usersPerPage = 2}
     }
 
 
-    const sort = (sortProperty) => {
+    const sortData = (sortProperty) => {
         if (isAscSorting) {
-            setData([...dataClone.sort((a, b) => {
+            setFilteredData([...filteredData.sort((a, b) => {
                 return a[`${sortProperty}`] > b[`${sortProperty}`] ? -1 : 1
             })])
         } else {
-            setData([...dataClone.sort((a, b) => {
+            setFilteredData([...filteredData.sort((a, b) => {
                 return a[`${sortProperty}`] > b[`${sortProperty}`] ? 1 : -1
             })])
         }
 
 
         setSorting(!isAscSorting)
+
+    }
+
+    const getFilteredData = (subStr) => {
+        setFilteredData(
+            [...dataClone].filter(user => {
+
+                return user['firstName'].toString().toLowerCase().includes(subStr.toLowerCase()) ||
+                    user['lastName'].toString().toLowerCase().includes(subStr.toLowerCase()) ||
+                    user['id'].toString().toLowerCase().includes(subStr.toLowerCase()) ||
+                    user['email'].toString().toLowerCase().includes(subStr.toLowerCase())
+
+
+            })
+        )
+
 
     }
 
@@ -43,19 +65,20 @@ const Table = ({data, onRowClick, totalPages, totalUsersCount, usersPerPage = 2}
                 <AddForm addUser={addUser} dataLength={data ? dataClone.length : 0}/>
             </div>
 
+            <SearchForm getFilteredData={getFilteredData}/>
+
+
             <table className="table">
                 <thead>
                 <tr>
-                    <th className={s.table_header} onClick={sort.bind(null, "id")}>ID {}</th>
-                    <th className={s.table_header} onClick={sort.bind(null, "firstName")}>First Name</th>
-                    <th className={s.table_header} onClick={sort.bind(null, "lastName")}>Last Name</th>
-                    <th className={s.table_header} onClick={sort.bind(null, "email")}>Email</th>
-                    <th className={s.table_header} onClick={sort.bind(null, "phone")}>Phone</th>
+                    <th className={s.table_header} onClick={sortData.bind(null, "id")}>ID {}</th>
+                    <th className={s.table_header} onClick={sortData.bind(null, "firstName")}>First Name</th>
+                    <th className={s.table_header} onClick={sortData.bind(null, "lastName")}>Last Name</th>
+                    <th className={s.table_header} onClick={sortData.bind(null, "email")}>Email</th>
+                    <th className={s.table_header} onClick={sortData.bind(null, "phone")}>Phone</th>
                 </tr>
 
-                {data ? (dataClone.map(user => (
-
-
+                {data ? (filteredData.map(user => (
                     <tr className={s.tableRow} key={user.id + user.phone} onClick={onRowClick.bind(null, user)}>
                         <th>{user.id}</th>
                         <td>{user.firstName}</td>
@@ -72,9 +95,10 @@ const Table = ({data, onRowClick, totalPages, totalUsersCount, usersPerPage = 2}
 
 
             <div className={s.pagination}>
-                <Paginator usersPerPage={usersPerPage} currentPage={currentPage} totalPages={totalPages}
-                           totalUsersCount={totalUsersCount}
-                           setCurrentPage={setCurrentPage} onPageChangeClick={onPageChangeClick}/>
+                {totalUsersCount ?
+                    <Paginator usersPerPage={usersPerPage} currentPage={currentPage} totalPages={totalPages}
+                               totalUsersCount={totalUsersCount}
+                               setCurrentPage={setCurrentPage} onPageChangeClick={onPageChangeClick}/> : null}
 
             </div>
         </div>

@@ -1,0 +1,16 @@
+.description__container {
+
+   display: grid;
+    justify-self: center;
+    grid-template-columns: repeat(2, 1fr);
+    margin: 50px 0;
+
+}
+.description__item {
+    border-bottom: 1px solid grey;
+
+}
+.description__item__info{
+    resize: none;
+    width: 90%;
+}

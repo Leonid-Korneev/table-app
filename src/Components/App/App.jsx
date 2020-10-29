@@ -14,14 +14,13 @@ function App(props) {
 
 
     useEffect(() => {
-        let request
+        let dataRequest
         setIsLoading(true)
-
         if (props.dataSize === "small")
-            request = apiRequests.getSmallData()
-        else request = apiRequests.getBigData()
+            dataRequest = apiRequests.getSmallData()
+        else dataRequest = apiRequests.getBigData()
 
-        request.then((response) => {
+        dataRequest.then((response) => {
             setTotalUsersCount(response.data.length)
             setData({data: response.data})
             setIsLoading(false)
@@ -37,7 +36,7 @@ function App(props) {
 
     return (
         <div className="container">
-            {!isLoading ? <Table data={data.data} onRowClick={onRowClick} totalUsersCount={totalUsersCount}/> :
+            {!isLoading ? <Table data={data.data} onRowClick={onRowClick} setTotalUsersCount={setTotalUsersCount}  totalUsersCount={totalUsersCount}/> :
                 <Preloader/>}
             {selectedUser ? <UserInfo user={selectedUser}/> : null}
         </div>
