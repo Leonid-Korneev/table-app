@@ -1,0 +1,26 @@
+.pagination {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    margin-bottom: 10px;
+
+}
+
+.item {
+    font-size: 130%;
+    margin: 5px;
+    padding: 5px;
+}
+
+
+.item:hover {
+
+    cursor: pointer;
+}
+
+
+.selected {
+    color: white;
+    background-color: #007bff;
+    border-radius: 3px;
+}

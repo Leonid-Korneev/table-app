@@ -1,3 +1,10 @@
 .addForm__item {
     margin: 5px;
 }
+
+.addForm {
+    display: grid;
+
+    justify-content: space-around;
+    margin: 15px;
+}

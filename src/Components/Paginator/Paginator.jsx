@@ -1,5 +1,5 @@
 import React, {useState} from "react";
-import s from "../Table/Table.module.css";
+import s from "./Paginator.module.css";
 
 
 export const Paginator = ({currentPage, onPageChangeClick, portionSize = 10, setCurrentPage, usersPerPage, totalUsersCount}) => {
@@ -30,14 +30,15 @@ export const Paginator = ({currentPage, onPageChangeClick, portionSize = 10, set
 
 
     return (
-        <>
-            {currentPortion > 1 ? <button type="button" className={s.item + s.button + "" + "btn btn-primary"}
+
+        <div className={s.pagination}>
+            {currentPortion > 1 ? <button type="button" className={s.item + s.button + " " + "btn btn-primary"}
                                           onClick={onPreviousBtnClick}> Prev </button> : null}
             <div>  {pagesArr.slice(firstItemInPortion, lastItemInPortion)}</div>
             {currentPortion === lastPortion ? null : <button className={s.item + s.button + " " + "btn btn-primary"}
                                                              onClick={onNextBtnClick}> Next </button>}
 
-        </>
+        </div>
 
     )
 }

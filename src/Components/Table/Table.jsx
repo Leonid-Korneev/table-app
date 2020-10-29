@@ -23,6 +23,7 @@ const Table = ({data, onRowClick, totalPages, totalUsersCount, setTotalUsersCoun
 
     const addUser = (user) => {
         setData([{...user}, ...dataClone])
+        setFilteredData([{...user}, ...dataClone])
     }
 
 
@@ -61,13 +62,9 @@ const Table = ({data, onRowClick, totalPages, totalUsersCount, setTotalUsersCoun
     return (
 
         <div>
-            <div className={s.addForm}>
-                <AddForm addUser={addUser} dataLength={data ? dataClone.length : 0}/>
-            </div>
 
+            <AddForm addUser={addUser} dataLength={data ? dataClone.length : 0}/>
             <SearchForm getFilteredData={getFilteredData}/>
-
-
             <table className="table">
                 <thead>
                 <tr>
@@ -92,15 +89,12 @@ const Table = ({data, onRowClick, totalPages, totalUsersCount, setTotalUsersCoun
 
                 </tbody>
             </table>
+            {totalUsersCount ?
+                <Paginator usersPerPage={usersPerPage} currentPage={currentPage} totalPages={totalPages}
+                           totalUsersCount={totalUsersCount}
+                           setCurrentPage={setCurrentPage} onPageChangeClick={onPageChangeClick}/> : null}
 
 
-            <div className={s.pagination}>
-                {totalUsersCount ?
-                    <Paginator usersPerPage={usersPerPage} currentPage={currentPage} totalPages={totalPages}
-                               totalUsersCount={totalUsersCount}
-                               setCurrentPage={setCurrentPage} onPageChangeClick={onPageChangeClick}/> : null}
-
-            </div>
         </div>
     )
 }
