@@ -1,4 +1,4 @@
-https://leonid-korneev.github.io/first-SN/
+https://leonid-korneev.github.io/table-app/
 
 ## Available Scripts
 
