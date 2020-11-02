@@ -1,4 +1,4 @@
-https://leonid-korneev.github.io/table-app/
+http://leonid-korneev.github.io/table-app/
 
 ## Available Scripts
 
