@@ -3,10 +3,12 @@ import {useForm} from "react-hook-form";
 import s from "./SearchForm.module.css"
 
 
-export const SearchForm = ({getFilteredData}) => {
+export const SearchForm = ({getFilteredData,setCurrentPage}) => {
     const { register, handleSubmit,  } = useForm();
     const onSubmit = data => {
+        setCurrentPage(1)
         getFilteredData(data.searchString)
+
     }
 
 

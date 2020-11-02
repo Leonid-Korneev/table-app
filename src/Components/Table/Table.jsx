@@ -64,7 +64,7 @@ const Table = ({data, onRowClick, totalPages, totalUsersCount, setTotalUsersCoun
         <div>
 
             <AddForm addUser={addUser} dataLength={data ? dataClone.length : 0}/>
-            <SearchForm getFilteredData={getFilteredData}/>
+            <SearchForm setCurrentPage={setCurrentPage} getFilteredData={getFilteredData}/>
             <table className="table">
                 <thead>
                 <tr>
